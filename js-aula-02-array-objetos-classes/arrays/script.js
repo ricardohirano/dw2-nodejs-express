@@ -37,4 +37,4 @@ document.write(`<p> Lista de frutas atualizada  pelo metodo de unshift é: ${fru
 
 //como contar os elementos de um vetor - metodo LENGTH
 const items = frutas.length;
-document.write(`<p> Lista de frutas atualizada  temos: ${items} frutas</p>`); ""
+document.write(`<p> Lista de frutas atualizada  temos: ${items} frutas</p>`); 
