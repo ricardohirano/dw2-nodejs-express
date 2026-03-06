@@ -48,4 +48,4 @@ document.write(`
 });
 document.write("<br><br>");
 document.write("4)<br>");
-document.write(listaClientes.length);
+document.write(`A quantidade de clientes cadastrado na lista é ${listaClientes.length}`);
