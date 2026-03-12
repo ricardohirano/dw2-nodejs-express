@@ -22,3 +22,7 @@ document.write(`<p>O carro ${carroPopular.marca} modelo ${carroPopular.modelo} Ã
 
 
 // desafio carro esportivo (chevvolet, camaro, 2020) +turbo() return "vrumm"
+
+const carroEsportivo = new Carro("chevvolet", "camaro", 2020);
+carroEsportivo.turbo = () =>  "vrum ...  ";
+document.write(`<p>O carro ${carroEsportivo.marca} modelo ${carroEsportivo.modelo} Ã© do ano ${carroEsportivo.ano} e acelera fazendo ${carroEsportivo.turbo()}</p>`);
