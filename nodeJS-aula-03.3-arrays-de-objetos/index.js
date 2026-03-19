@@ -61,7 +61,7 @@ app.get("/produtos/:prod", (req, res)=>{
 
 // criando a rota de serviços do usuario
 app.get("/servicos", function (req, res){
-////////Arays de objetos
+    ////////Arays de objetos
 
 const servicos = [
     {
@@ -91,7 +91,6 @@ const servicos = [
         servicos : servicos
     });
 });
-
 
 // iniciando o servidor na porta 8080
 
