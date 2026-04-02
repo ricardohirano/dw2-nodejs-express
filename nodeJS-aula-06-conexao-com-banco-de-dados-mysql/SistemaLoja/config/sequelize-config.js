@@ -12,6 +12,8 @@ const connection = new Sequelize({
     password : "",
     // fuso horario
     timezone : "-03:00", 
+    // depois de criar o banco colocamos o database 
+    database: 'sistemaloja'
 });
 
 // exportando o modulo

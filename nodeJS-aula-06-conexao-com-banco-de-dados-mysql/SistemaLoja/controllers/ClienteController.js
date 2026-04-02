@@ -7,6 +7,8 @@ import express from 'express';
 // metodo do Express usado com ES6 Modules (nova)
 const router = express.Router();
 
+// Importando o Moldel do cliente
+import Cliente from '../models/Cliente.js';
 
 // ROTA CLIENTES  - foi trocado o app pelo router
 router.get("/clientes",function(req,res){

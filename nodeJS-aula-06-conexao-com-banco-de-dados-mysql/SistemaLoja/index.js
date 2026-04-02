@@ -18,6 +18,16 @@ connection.authenticate().then(() =>{
     console.log(`Ocorreu um erro ao se conectar ao banco ${error}`)
 })
 
+// criando o banco de dados somente se ainda nao existir
+
+connection.query("CREATE DATABASE IF NOT EXISTS SistemaLoja;").then(() =>{
+    console.log("O banco de dados esta criado!");
+}).catch((error) =>{
+    console.log(`Ocorreu um erro ao criar o banco de dados. Erro ${error}`);
+});
+
+//
+
 // Iniciando o Express 
 const app = express() 
 // Define o EJS como Renderizador de páginas
@@ -34,10 +44,6 @@ app.use("/",ProdutoController)
 app.get("/",function(req,res){
     res.render("index")
 })
-
-
-
-
 
 
 // INICIA O SERVIDOR NA PORTA 8080
