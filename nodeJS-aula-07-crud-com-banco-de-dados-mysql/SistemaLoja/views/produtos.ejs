@@ -1,0 +1,59 @@
+<%- include ('partials/header.ejs') %>
+<%- include ('partials/navbar.ejs') %>
+
+        <div class="container">
+            <div class="card">
+                <div class="card-header">
+                    <h1>Cadastrar Produtos</h1>
+                </div>
+                <div class="card-body">
+                    <form action="/produtos/cadastrar" method="POST">
+                        <label>Nome do Produto</label>
+                        <input type="text" name="nome" placeholder="Insira o nome do cliente" class="form-control"required>
+                        
+                        <label>CPF do cliente</label>
+                        <input type="text" name="cpf" placeholder="Insira o CPF do cliente" class="form-control"required>
+                        
+                        <label>Endereço do cliente</label>
+                        <input type="text" name="endereco" placeholder="Insira o endereco do cliente" class="form-control"required>
+                        
+                        <br>
+
+                        <button type="submit" class="btn btn-success">Cadastrar</button>
+                        <button type="reset" class="btn btn-danger">limpar</button>
+                    </form>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>Produtos</h1>
+            </div>
+            <div class="card-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Nome:</th>
+                            <th>Preço:</th>
+                            <th>Categoria:</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% produtos.forEach(produto => { %>
+                        <tr>
+                            <td><img src="imgs/product.png" width="30px"></td>
+                            <td><%= produto.nome %></td>
+                            <td><%= produto.preco.toLocaleString('pt-br', {style: 'currency', currency: 'BRL'}) %></td>
+                            <td><%= produto.categoria %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<%- include ('partials/footer.ejs') %>
