@@ -11,7 +11,7 @@ const connection = new Sequelize({
     // senha
     password : "",
     // fuso horario
-    timezone : "-03:00", 
+    timezone : "-03:00",
     // depois de criar o banco colocamos o database 
    database: 'loja_relacional'
 });

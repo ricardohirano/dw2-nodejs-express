@@ -22,7 +22,7 @@ const Pedido = connection.define("pedido", {
 
 // O metodo synsc() sincoroniza os dadods com o banco
 // force: false -> nao recria a tabela caso ela ja exista
-Pedido.sync({force : false});
+//Pedido.sync({force : false});
 export default Pedido;
 
 //depois disso precisa importar o model cliente no controller cliente
