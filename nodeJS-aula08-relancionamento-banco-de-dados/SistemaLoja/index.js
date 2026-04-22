@@ -41,8 +41,8 @@ associations();
 //Trasformando as funcoes em uma promessa
 Promise.all(
    [
-       Cliente.sync({force:false}),
-       Pedido.sync({force:false})
+       Cliente.sync({force:false}), // depois de criar uma vez mudar para false
+       Pedido.sync({force:false}) // depois de criar uma vez mudar para false
    ] 
 ).then(() => {
     console.log("Entidades criadas e relacionadas com sucesso!")
