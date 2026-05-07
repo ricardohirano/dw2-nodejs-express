@@ -2,24 +2,36 @@
 //const express = require("express") - metodo Common js
 import express from 'express';
 
+import session from "express-session";
 // importando o Controller de cliente (onde estão as rotas)
 import ClienteController from "./controllers/ClienteController.js"
 import PedidoController from "./controllers/PedidoController.js"
 import ProdutoController from "./controllers/ProdutoController.js"
+import UsuarioController from "./controllers/UsuarioController.js"
 
 // Importando os Models
 import Cliente from "./models/Cliente.js"
 import Pedido from "./models/Pedido.js"
 import Usuario from './models/Usuario.js';
 
-
 // Importando as Associacoes
 import associations from './config/associations.js';
-
 
 // Importando o arquivo de conexao com o banco
 import connection from './config/sequelize-config.js';
 
+// Iniciando o Express 
+const app = express()
+
+//Configuranco a sessao do usuario
+app.use(session({
+    secret: "minhalojasecret",
+    cookie: { 
+        maxAge: 30000 // 30 segundos
+    },
+    saveUninitialized: false, // Correção aqui (Uninitialized)
+    resave: false
+}));
 
 // realizando a conexao com o banco de dadosl
 connection.authenticate().then(() =>{
@@ -52,8 +64,7 @@ Promise.all(
     console.log("Ocorreu um erro ao sincronizar os Models."+error);
 }) 
 
-// Iniciando o Express 
-const app = express() 
+ 
 // Define o EJS como Renderizador de páginas
 app.set('view engine', 'ejs')
 // Define o uso da pasta "public" para uso de arquivos estáticos
@@ -65,16 +76,14 @@ app.use(express.urlencoded({extended: false}))
 app.use("/",ClienteController)
 app.use("/",PedidoController)
 app.use("/",ProdutoController)
+app.use("/",UsuarioController)
 
 // ROTA PRINCIPAL
 app.get("/",function(req,res){
     res.render("index")
 })
 
-//Rota login
-app.get("/login",function(req,res){
-    res.render("login")
-})
+
 
 // INICIA O SERVIDOR NA PORTA 8080
 const port = 8080
