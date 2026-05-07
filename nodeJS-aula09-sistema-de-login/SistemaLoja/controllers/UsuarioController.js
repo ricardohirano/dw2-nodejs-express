@@ -70,12 +70,12 @@ router.post("/caduser", (req,res) =>{
                         id: usuario.id,
                         email: usuario.email
                     }
-                    res.send(`Sessao do usuario criado com sucesso"<br>
+                    /*res.send(`Sessao do usuario criado com sucesso"<br>
                         ID do usuario logado: ${req.session.usuario['id']}<br>
-                        Email do usuario logado ${req.session.email['email']}
-                        `)
-                    /*// autoriza o login
-                    res.redirect("/");*/
+                        Email do usuario logado ${req.session.usuario['email']}
+                        `)*/
+                    // autoriza o login
+                    res.redirect("/");
                     // se a senha estiver incorreta
                }else {
                     res.send(`Senha Invalida! <br> <a href="/login"> Tente Novamente.</a>`)

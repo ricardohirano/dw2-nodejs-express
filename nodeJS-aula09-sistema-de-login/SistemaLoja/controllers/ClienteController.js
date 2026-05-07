@@ -10,8 +10,11 @@ const router = express.Router();
 // Importando o Moldel do cliente
 import Cliente from '../models/Cliente.js';
 
+//importando o middleware de autentificação
+import Auth from '../middlewares/Auth.js'
+
 // ROTA CLIENTES  - foi trocado o app pelo router
-router.get("/clientes",function(req,res){
+router.get("/clientes",Auth, function(req,res){
 /*    const clientes = [
         {nome: "Ana Silva", cpf: "123.456.789-00", endereco: "Rua das Flores, 123, Bairro Jardim Primavera, Cidade Felicidade, Estado do Sonho, CEP: 12345-678"},
         {nome: "Pedro Almeida", cpf: "987.654.321-00", endereco: "Avenida Central, 456, Bairro Centro, Cidade Nova, Estado da Esperança, CEP: 98765-432"},
@@ -31,7 +34,7 @@ Cliente.findAll().then(clientes=>{
 }); 
 
 // ROTA DE CADASTRO DE CLIENTES (subrota / cadastrar)
-    router.post("/clientes/cadastrar",(req,res) => {
+    router.post("/clientes/cadastrar",Auth, (req,res) => {
         // criando as variaveis que iram armazenar os dados vindos do form
 
         const nome = req.body.nome;
@@ -54,7 +57,7 @@ Cliente.findAll().then(clientes=>{
     
 // ROTA DE EXCLUSAO DE CLIENTE
 
-router.get("/clientes/excluir/:id" , (req,res)=>{
+router.get("/clientes/excluir/:id" ,Auth,  (req,res)=>{
     //capturando o parametro da rota
     const id = req.params.id
     // Enviando o ID do cliente para apagar do banco de dados
@@ -74,7 +77,7 @@ router.get("/clientes/excluir/:id" , (req,res)=>{
 
 // Rota de edicao do cliente
 
-router.get("/clientes/editar/:id", (req,res) => {
+router.get("/clientes/editar/:id",Auth,  (req,res) => {
     const id = req.params.id
     // Busacando o cliente no banco pelo pk(primary key)
     Cliente.findByPk(id).then(cliente =>{
@@ -89,7 +92,7 @@ router.get("/clientes/editar/:id", (req,res) => {
 
 // Rota de alereacao de clientes
 
-router.post("/clientes/alterar/", (req, res) => {
+router.post("/clientes/alterar/",Auth,  (req, res) => {
     // Cletar os dados do formulario de edicao
     const nome = req.body.nome;
     const cpf = req.body.cpf;

@@ -27,7 +27,7 @@ const app = express()
 app.use(session({
     secret: "minhalojasecret",
     cookie: { 
-        maxAge: 30000 // 30 segundos
+        maxAge: 3600000 // 1 hora
     },
     saveUninitialized: false, // Correção aqui (Uninitialized)
     resave: false
