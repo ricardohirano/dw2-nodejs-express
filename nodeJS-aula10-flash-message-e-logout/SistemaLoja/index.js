@@ -1,0 +1,106 @@
+// Importando o Express
+//const express = require("express") - metodo Common js
+import express from 'express';
+// Importando o express-flsah
+import flash from 'express-flash';
+
+
+import session from "express-session";
+// importando o Controller de cliente (onde estão as rotas)
+import ClienteController from "./controllers/ClienteController.js"
+import PedidoController from "./controllers/PedidoController.js"
+import ProdutoController from "./controllers/ProdutoController.js"
+import UsuarioController from "./controllers/UsuarioController.js"
+
+// Importando os Models
+import Cliente from "./models/Cliente.js"
+import Pedido from "./models/Pedido.js"
+import Usuario from './models/Usuario.js';
+
+// Importando as Associacoes
+import associations from './config/associations.js';
+
+import Auth from './middlewares/Auth.js';
+// Importando o arquivo de conexao com o banco
+import connection from './config/sequelize-config.js';
+
+// Iniciando o Express 
+const app = express()
+// Configurando o express-flash
+app.use(flash())
+
+//Configuranco a sessao do usuario
+app.use(session({
+    secret: "minhalojasecret",
+    cookie: { 
+        maxAge: 3600000 // 1 hora
+    },
+    saveUninitialized: false, // Correção aqui (Uninitialized)
+    resave: false
+}));
+
+// realizando a conexao com o banco de dadosl
+connection.authenticate().then(() =>{
+    console.log("Conexao do banco de dados realizado com sucesso!")
+}).catch((error) =>{
+    console.log(`Ocorreu um erro ao se conectar ao banco ${error}`)
+})
+
+// criando o banco de dados somente se ainda nao existir
+
+connection.query("CREATE DATABASE IF NOT EXISTS loja_relacional;").then(() =>{
+    console.log("O banco de dados esta criado!");
+}).catch((error) =>{
+    console.log(`Ocorreu um erro ao criar o banco de dados. Erro ${error}`);
+});
+
+//Invocando a função que cria as associaoes
+associations();
+
+// sincronizando os models de clientes e pedidos
+//Trasformando as funcoes em uma promessa
+Promise.all(
+   [
+       Cliente.sync({force:false}), // depois de criar uma vez mudar para false
+       Pedido.sync({force:false}) // depois de criar uma vez mudar para false
+   ] 
+).then(() => {
+    console.log("Entidades criadas e relacionadas com sucesso!")
+}).catch(error =>{
+    console.log("Ocorreu um erro ao sincronizar os Models."+error);
+}) 
+
+ 
+// Define o EJS como Renderizador de páginas
+app.set('view engine', 'ejs')
+// Define o uso da pasta "public" para uso de arquivos estáticos
+app.use(express.static('public'))
+// Configurando o Express para aceitar daddos findo do formulario
+app.use(express.urlencoded({extended: false}))
+
+// ativando o uso das rotas
+app.use("/",ClienteController)
+app.use("/",PedidoController)
+app.use("/",ProdutoController)
+app.use("/",UsuarioController)
+
+// ROTA PRINCIPAL
+app.get("/", Auth, function(req,res){
+    res.render("index", {
+        // coletando a flash message
+        messages : req.flash()
+    })
+})
+
+
+
+// INICIA O SERVIDOR NA PORTA 8080
+const port = 8080
+app.listen(port, function(erro){
+    if(erro) {
+        console.log("Ocorreu um erro!")
+
+    }else{
+        console.log(`Servidor iniciado com sucesso em http://localhost:${port}`)
+    }
+})
